@@ -4,6 +4,7 @@ let scissors = document.querySelector(".scissors");
 let reset = document.querySelector(".reset");
 let scoreDisplay = document.querySelector("p");
 let container = document.querySelector(".container");
+let moves = document.createElement("p");
 
 // console.log(JSON.parse(localStorage.getItem('score')));
 
@@ -11,6 +12,7 @@ let container = document.querySelector(".container");
 let comp = "";
 let result = "";
 
+//if right is not true, left and vice versa
 let score = JSON.parse(localStorage.getItem('score')) || {
                                                             wins: 0,
                                                             losses: 0,
@@ -40,6 +42,11 @@ function scores(){
     localStorage.setItem('score', JSON.stringify(score));
 }
 
+function updateScore(){
+    scoreDisplay.innerHTML = `Win: ${score.wins}, Losses: ${score.losses}, Ties: ${score.ties}`;
+    container.appendChild(scoreDisplay);
+}
+
 rock.addEventListener("click", function() {
     compMove();
 
@@ -52,15 +59,11 @@ rock.addEventListener("click", function() {
     }
 
     scores();
-    alert(`The computer picked ${comp}, You picked Rock. Result : ${result}. 
-                                Wins : ${score.wins}, Losses : ${score.losses}, Ties : ${score.ties}`);
+    moves.innerHTML = `Result : ${result} <br>
+    Computer: ${comp}, You: Rock.`;
+    container.appendChild(moves);
 
-    console.log("Computer: ",comp);
-    console.log("Result: ", result);
-    console.log(`Win: ${score.wins}, Losses: ${score.losses}, Ties: ${score.ties} `);
-
-    scoreDisplay.innerHTML = `Win: ${score.wins}, Losses: ${score.losses}, Ties: ${score.ties}`;
-    container.appendChild(scoreDisplay);
+    updateScore();
 });
 
 paper.addEventListener("click", function() {
@@ -75,14 +78,11 @@ paper.addEventListener("click", function() {
     }
 
     scores();
-    alert(`The computer picked ${comp}, You picked Paper. Result : ${result}. 
-                                Wins : ${score.wins}, Losses : ${score.losses}, Ties : ${score.ties}`);
-    console.log("Computer: ",comp);
-    console.log("Result: ", result);
-    console.log(`Win: ${score.wins}, Losses: ${score.losses}, Ties: ${score.ties} `);
+    moves.innerHTML = `Result : ${result} <br>
+    Computer: ${comp}, You: Paper.`;
+    container.appendChild(moves);
 
-    scoreDisplay.innerHTML = `Win: ${score.wins}, Losses: ${score.losses}, Ties: ${score.ties}`;
-    container.appendChild(scoreDisplay);
+    updateScore();
 });
 
 scissors.addEventListener("click", function() {
@@ -97,15 +97,11 @@ scissors.addEventListener("click", function() {
     }
 
     scores();
-    alert(`The computer picked ${comp}, You picked Scissors. Result : ${result}. 
-                                Wins : ${score.wins}, Losses : ${score.losses}, Ties : ${score.ties}`);
+    moves.innerHTML = `Result : ${result} <br>
+    Computer: ${comp}, You: Scissors.`;
+    container.appendChild(moves);
 
-    console.log("Computer: ",comp);
-    console.log("Result: ", result);
-    console.log(`Win: ${score.wins}, Losses: ${score.losses}, Ties: ${score.ties} `);
-
-    scoreDisplay.innerHTML = `Win: ${score.wins}, Losses: ${score.losses}, Ties: ${score.ties}`;
-    container.appendChild(scoreDisplay);
+    updateScore();
 });
 
 
@@ -113,9 +109,13 @@ reset.addEventListener("click", function () {
     score.wins = 0;
     score.losses = 0;
     score.ties = 0;
-    localStorage.removeItem('score');
 
-    console.log(`Score wins: ${score.wins}, Score Losses: ${score.losses}, Score Ties: ${score.ties}`);
-    scoreDisplay.innerHTML = `Win: ${score.wins}, Losses: ${score.losses}, Ties: ${score.ties}`;
-    container.appendChild(scoreDisplay);
+    localStorage.setItem('score', JSON.stringify(score))
+
+    // scoreDisplay.innerHTML = `Win: ${score.wins}, Losses: ${score.losses}, Ties: ${score.ties}`;
+    // container.appendChild(scoreDisplay);
+    moves.innerHTML = "";
+    updateScore();
 });
+
+updateScore();
