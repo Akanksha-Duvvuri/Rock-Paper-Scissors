@@ -2,15 +2,20 @@ let rock = document.querySelector(".rock");
 let paper = document.querySelector(".paper");
 let scissors = document.querySelector(".scissors");
 let reset = document.querySelector(".reset");
+let scoreDisplay = document.querySelector("p");
+let container = document.querySelector(".container");
+
+// console.log(JSON.parse(localStorage.getItem('score')));
+
 
 let comp = "";
 let result = "";
 
-let score = {
-    wins: 0,
-    losses: 0,
-    ties: 0
-};
+let score = JSON.parse(localStorage.getItem('score')) || {
+                                                            wins: 0,
+                                                            losses: 0,
+                                                            ties: 0
+                                                        };
 
 function compMove() {
     let random = Math.floor(Math.random() * 3) + 1;
@@ -26,11 +31,13 @@ function compMove() {
 function scores(){
     if(result === "You Win"){
         score.wins += 1;
-    } else if(result === "You lose"){
+    } else if(result === "You Lose"){
         score.losses += 1;
     } else if(result === "Tie"){
         score.ties += 1;
     }
+
+    localStorage.setItem('score', JSON.stringify(score));
 }
 
 rock.addEventListener("click", function() {
@@ -39,7 +46,7 @@ rock.addEventListener("click", function() {
     if(comp === "Rock"){
         result = "Tie";
     } else if(comp === "Paper"){
-        result = "You lose";
+        result = "You Lose";
     } else if(comp === "Scissors"){
         result = "You Win";
     }
@@ -51,6 +58,9 @@ rock.addEventListener("click", function() {
     console.log("Computer: ",comp);
     console.log("Result: ", result);
     console.log(`Win: ${score.wins}, Losses: ${score.losses}, Ties: ${score.ties} `);
+
+    scoreDisplay.innerHTML = `Win: ${score.wins}, Losses: ${score.losses}, Ties: ${score.ties}`;
+    container.appendChild(scoreDisplay);
 });
 
 paper.addEventListener("click", function() {
@@ -70,6 +80,9 @@ paper.addEventListener("click", function() {
     console.log("Computer: ",comp);
     console.log("Result: ", result);
     console.log(`Win: ${score.wins}, Losses: ${score.losses}, Ties: ${score.ties} `);
+
+    scoreDisplay.innerHTML = `Win: ${score.wins}, Losses: ${score.losses}, Ties: ${score.ties}`;
+    container.appendChild(scoreDisplay);
 });
 
 scissors.addEventListener("click", function() {
@@ -90,12 +103,19 @@ scissors.addEventListener("click", function() {
     console.log("Computer: ",comp);
     console.log("Result: ", result);
     console.log(`Win: ${score.wins}, Losses: ${score.losses}, Ties: ${score.ties} `);
+
+    scoreDisplay.innerHTML = `Win: ${score.wins}, Losses: ${score.losses}, Ties: ${score.ties}`;
+    container.appendChild(scoreDisplay);
 });
+
 
 reset.addEventListener("click", function () {
     score.wins = 0;
     score.losses = 0;
     score.ties = 0;
+    localStorage.removeItem('score');
 
     console.log(`Score wins: ${score.wins}, Score Losses: ${score.losses}, Score Ties: ${score.ties}`);
+    scoreDisplay.innerHTML = `Win: ${score.wins}, Losses: ${score.losses}, Ties: ${score.ties}`;
+    container.appendChild(scoreDisplay);
 });
