@@ -1,1 +1,32 @@
-ECHO is on.
+body{
+    background-color: #191919;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+}
+
+.container button{
+    padding: 50px;
+    background-color: #191919;
+    color: white;
+    border: 2px solid white;
+    border-radius: 50%;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.reset{
+    padding: 10px 15px;
+    width: fit-content;
+    background-color: white;
+    font-size: 15px;
+    margin-top: 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.score{
+    font-size: 20px;
+    margin-top: 50px;
+}
